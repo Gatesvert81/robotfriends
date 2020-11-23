@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import CardList from './CardList.js';
+import {robots} from './robots';
+import SearchBox from './SearchBox';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+    constructor() {
+        super()1
+        this.state = {
+            robots: [],
+            serchfield: ''
+        }
+    }
+
+    componentDidMount() {
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(users =>  {this.setState({ robots: users })});
+    }
+
+    render() {
+        return (
+            <div className='tc' >
+                <h1 className='f2' > RoboFriends</h1>
+                <SearchBox />
+                <CardList robots={this.state.robots} />
+            </div>
+        );
+    }   
 }
 
-export default App;
+export default App; 
